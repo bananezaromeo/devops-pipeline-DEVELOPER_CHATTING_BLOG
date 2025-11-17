@@ -1,1 +1,13 @@
+# Default owners for everything in the repo
+* @bananezaromeo @0783896498
+
+# Infrastructure code
+/terraform/ @infrastructure-engineer
+/ansible/ @0783896498
+
+# CI/CD pipelines
+/.github/workflows/ @bananezaromeo
+
+# Security configurations
+/security/ @shyakafred
 
