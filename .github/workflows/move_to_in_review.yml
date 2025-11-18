@@ -1,0 +1,16 @@
+name: Move to In Review when PR is opened
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  move_to_in_review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Move issue linked to PR to In Review
+        uses: actions-ecosystem/action-move-project-card@v1
+        with:
+          project-url: https://github.com/bananezaromeo/devops-pipeline-DEVELOPER_CHATTING_BLOG/projects/1
+          column-name: In Review
+          github-token: ${{ secrets.GITHUB_TOKEN }}
