@@ -1,0 +1,16 @@
+name: Auto-add new issues to Backlog
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  add_to_backlog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add issue to Backlog column
+        uses: actions-ecosystem/action-add-to-project@v1
+        with:
+          project-url: https://github.com/bananezaromeo/devops-pipeline-DEVELOPER_CHATTING_BLOG/projects/1
+          column-name: Backlog
+          github-token: ${{ secrets.GITHUB_TOKEN }}
