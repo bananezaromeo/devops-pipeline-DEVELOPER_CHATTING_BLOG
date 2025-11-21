@@ -32,8 +32,8 @@ const User = require('../models/User');
 router.get('/users', authMiddleware, async (req, res) => {
   try {
     const users = await User.find({ 
-      isVerified: true, 
-      _id: { $ne: req.user.userId } // Exclude current user
+      otpVerified: true, 
+      _id: { $ne: req.user.id } // Exclude current user
     }).select('username email _id');
     res.status(200).json(users);
   } catch (err) {
