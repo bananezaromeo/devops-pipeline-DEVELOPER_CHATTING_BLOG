@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<h2>Chat Room</h2>
+
+<div class="chat-container">
+
+    <div class="user-list" id="userList"></div>
+
+    <div class="chat-box">
+        <div id="messages" class="messages"></div>
+        
+        <div class="send-box">
+            <input id="messageInput" placeholder="Type...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
+<script src="js/api.js"></script>
+<script src="js/chat.js"></script>
+
+</body>
+</html>

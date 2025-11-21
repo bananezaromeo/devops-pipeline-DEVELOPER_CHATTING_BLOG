@@ -14,9 +14,15 @@ const setupSocket = (server) => {
     });
 
     socket.on('sendMessage', async ({ senderId, receiverId, content }) => {
-      const message = await Message.create({ sender: senderId, receiver: receiverId, content });
-      io.to(receiverId).emit('receiveMessage', message); // real-time
-      io.to(senderId).emit('receiveMessage', message);
+      try {
+        const message = await Message.create({ sender: senderId, receiver: receiverId, content });
+        // Emit to both users
+        io.to(receiverId).emit('receiveMessage', message);
+        io.to(senderId).emit('receiveMessage', message);
+      } catch (err) {
+        console.error('Error sending message:', err);
+        socket.emit('error', { message: 'Failed to send message' });
+      }
     });
 
     socket.on('disconnect', () => {

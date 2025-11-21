@@ -8,8 +8,8 @@ const getMessages = async (req, res) => {
 
     const messages = await Message.find({
       $or: [
-        { from: userId, to: otherUserId },
-        { from: otherUserId, to: userId },
+        { sender: userId, receiver: otherUserId },
+        { sender: otherUserId, receiver: userId },
       ],
     }).sort({ createdAt: 1 });
 

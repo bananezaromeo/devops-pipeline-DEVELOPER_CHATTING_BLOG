@@ -1,5 +1,6 @@
 const express = require('express');
 const http = require('http');
+const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const setupSwagger = require('./config/swagger');
@@ -19,6 +20,7 @@ const app = express();
 const server = http.createServer(app); // For Socket.IO
 
 // Middleware
+app.use(cors());
 app.use(express.json());
 
 // Swagger setup (must be before routes)
