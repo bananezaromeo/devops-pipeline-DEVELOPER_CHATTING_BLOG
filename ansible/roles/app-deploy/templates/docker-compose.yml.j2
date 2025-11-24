@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_DATABASE: {{ db_name }}
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - app-network
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+
+  backend:
+    image: {{ acr_login_server }}/{{ backend_image_name }}:{{ image_tag }}
+    container_name: backend
+    environment:
+      PORT: 5000
+      MONGO_URI: mongodb://mongodb:27017/{{ db_name }}
+      NODE_ENV: production
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  frontend:
+    image: {{ acr_login_server }}/{{ frontend_image_name }}:{{ image_tag }}
+    container_name: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
+
+networks:
+  app-network:
+    driver: bridge

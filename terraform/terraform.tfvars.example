@@ -1,0 +1,17 @@
+# Terraform Variables Configuration
+# Copy this file to terraform.tfvars and update with your values
+
+# Project Configuration
+project_name = "devopspipeline"
+environment  = "dev"
+location     = "East US"
+
+# VM Configuration
+vm_size        = "Standard_B2s"
+admin_username = "azureuser"
+
+# SSH Public Key
+# Generate your SSH key pair first:
+# For Windows (Git Bash or WSL): ssh-keygen -t rsa -b 4096 -f ~/.ssh/azure_devops_key
+# Then paste the contents of ~/.ssh/azure_devops_key.pub below
+ssh_public_key = "ssh-rsa AAAAB3Nza... your-email@example.com"
