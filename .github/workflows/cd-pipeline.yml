@@ -89,9 +89,6 @@ jobs:
     name: Deploy to Azure VM
     runs-on: ubuntu-latest
     needs: build-and-push
-    environment:
-      name: production
-      url: http://${{ steps.get-ip.outputs.vm_ip }}
     
     steps:
       - name: Checkout code

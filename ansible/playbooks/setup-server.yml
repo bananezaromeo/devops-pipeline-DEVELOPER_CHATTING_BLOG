@@ -27,7 +27,7 @@
   post_tasks:
     - name: Verify application is running
       uri:
-        url: "http://localhost:3000/health"
+        url: "http://localhost:5000/health"
         status_code: 200
       register: health_check
       until: health_check.status == 200
@@ -39,4 +39,4 @@
         msg:
           - "Deployment completed successfully"
           - "Application URL: http://{{ ansible_host }}"
-          - "Backend Health: http://{{ ansible_host }}:3000/health"
+          - "Backend Health: http://{{ ansible_host }}:5000/health"
