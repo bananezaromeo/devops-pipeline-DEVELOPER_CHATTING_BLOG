@@ -1,4 +1,25 @@
 ---
+# Ensure nginx is not running on host to avoid port conflicts
+- name: Check if nginx is installed on host
+  command: which nginx
+  register: nginx_installed
+  failed_when: false
+  changed_when: false
+
+- name: Stop nginx service if running
+  systemd:
+    name: nginx
+    state: stopped
+  when: nginx_installed.rc == 0
+  failed_when: false
+
+- name: Disable nginx from starting on boot
+  systemd:
+    name: nginx
+    enabled: no
+  when: nginx_installed.rc == 0
+  failed_when: false
+
 - name: Update all packages
   apt:
     upgrade: dist
