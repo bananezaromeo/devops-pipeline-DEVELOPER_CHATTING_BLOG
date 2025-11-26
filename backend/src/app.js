@@ -4,26 +4,24 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
-
 require('dotenv').config();
 
 const app = express();
 connectDB();
-
 app.use(cors());
 app.use(express.json());
 
 // Swagger setup
 const swaggerOptions = {
-  swaggerDefinition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Developer Chatting API',
-      version: '1.0.0',
-      description: 'API documentation for user authentication and messages',
+    swaggerDefinition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Developer Chatting API',
+            version: '1.0.0',
+            description: 'API documentation for user authentication and messages',
+        },
     },
-  },
-  apis: ['./src/routes/*.js'],
+    apis: ['./src/routes/*.js'],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);

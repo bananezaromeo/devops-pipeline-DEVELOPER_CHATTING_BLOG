@@ -28,7 +28,7 @@ setupSwagger(app);
 
 // Test route
 app.get('/health', (req, res) => {
-  res.status(200).json({ message: 'Backend is running!' });
+    res.status(200).json({ message: 'Backend is running!' });
 });
 
 // Routes
@@ -46,11 +46,12 @@ setupSocket(server);
 // Start server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
 
 // Global error handling
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
+    console.error(err.stack);
+    res.status(500).json({ message: 'Something went wrong!' });
 });

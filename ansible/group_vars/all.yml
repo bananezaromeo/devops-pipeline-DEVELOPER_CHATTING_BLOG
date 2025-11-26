@@ -1,0 +1,12 @@
+---
+# Application Configuration
+db_name: chatapp
+db_user: admin
+db_password: securepassword
+backend_image_name: backend
+frontend_image_name: frontend
+image_tag: latest
+
+# Azure Container Registry (ACR) Configuration
+acr_name: devopspipelinedevacrrfm5e4
+acr_login_server: devopspipelinedevacrrfm5e4.azurecr.io

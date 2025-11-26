@@ -1,3 +1,42 @@
 {
-  "extends": ["react-app", "react-app/jest"]
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 12
+    },
+    "globals": {
+        "io": "readonly",
+        "CryptoJS": "readonly"
+    },
+    "rules": {
+        "indent": [
+            "error",
+            2
+        ],
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-unused-vars": [
+            "warn",
+            {
+                "argsIgnorePattern": "^_",
+                "varsIgnorePattern": "^(socket|selectedUser|currentUserId|request)$"
+            }
+        ],
+        "no-console": "off"
+    }
 }
