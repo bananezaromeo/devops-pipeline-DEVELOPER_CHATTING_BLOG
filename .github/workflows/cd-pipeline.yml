@@ -122,14 +122,14 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.VM_PUBLIC_IP }} >> ~/.ssh/known_hosts
 
-      - name: Create Ansible inventory and variables
+      - name: Create Ansible inventory and extra vars
         run: |
           cat > ansible/inventory/hosts << EOF
           [app_servers]
           azure-vm ansible_host=${{ secrets.VM_PUBLIC_IP }} ansible_user=azureuser
           EOF
           
-          cat > ansible/group_vars/app_servers.yml << EOF
+          cat > ansible/extra_vars.yml << EOF
           ---
           acr_name: ${{ secrets.ACR_NAME }}
           acr_login_server: ${{ secrets.ACR_LOGIN_SERVER }}
@@ -147,7 +147,7 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         run: |
-          ansible-playbook playbooks/setup-server.yml -i inventory/hosts -v
+          ansible-playbook playbooks/setup-server.yml -i inventory/hosts -e @extra_vars.yml -v
 
       - name: Verify deployment
         run: |
