@@ -74,18 +74,13 @@
 
 - name: Check Docker client and daemon versions
   shell: |
-    echo "Docker client version:"
-    docker version --format '{{.Client.Version}}'
-    echo "Docker daemon version:"
-    docker version --format '{{.Server.Version}}'
-    echo "Docker API version:"
-    docker version --format '{{.Server.APIVersion}}'
+    docker version
   register: docker_versions
   ignore_errors: yes
 
 - name: Display Docker versions
   debug:
-    msg: "{{ docker_versions.stdout }}"
+    var: docker_versions.stdout_lines
 
 - name: Create Docker daemon configuration
   copy:
