@@ -129,15 +129,18 @@ jobs:
           azure-vm ansible_host=${{ secrets.VM_PUBLIC_IP }} ansible_user=azureuser
           EOF
           
-          cat > ansible/extra_vars.yml << EOF
+          cat > ansible/extra_vars.yml << 'EOF'
           ---
-          acr_name: ${{ secrets.ACR_NAME }}
-          acr_login_server: ${{ secrets.ACR_LOGIN_SERVER }}
-          image_tag: ${{ needs.build-and-push.outputs.image_tag }}
-          db_user: ${{ secrets.DB_USER }}
-          db_password: ${{ secrets.DB_PASSWORD }}
-          db_name: ${{ secrets.DB_NAME }}
+          acr_name: "${{ secrets.ACR_NAME }}"
+          acr_login_server: "${{ secrets.ACR_LOGIN_SERVER }}"
+          image_tag: "${{ needs.build-and-push.outputs.image_tag }}"
+          db_user: "${{ secrets.DB_USER }}"
+          db_password: "${{ secrets.DB_PASSWORD }}"
+          db_name: "${{ secrets.DB_NAME }}"
           EOF
+          
+          echo "=== extra_vars.yml content ===" 
+          cat ansible/extra_vars.yml
 
       - name: Run Ansible deployment
         working-directory: ./ansible
