@@ -53,11 +53,25 @@
   debug:
     msg: "Pull result: {{ pull_result }}"
 
-- name: Start application containers
-  community.docker.docker_compose:
-    project_src: /opt/devops-app
-    state: present
-    restarted: yes
+- name: Check Docker daemon status
+  shell: docker ps
+  register: docker_ps
+
+- name: Show Docker status
+  debug:
+    msg: "Docker running containers: {{ docker_ps.stdout }}"
+
+- name: Manual docker-compose up with verbose output
+  shell: |
+    cd /opt/devops-app
+    docker-compose down --remove-orphans 2>&1 || true
+    docker-compose up -d 2>&1
+  register: compose_up
+  ignore_errors: yes
+
+- name: Show docker-compose up output
+  debug:
+    msg: "Docker compose output:\n{{ compose_up.stdout }}\n{{ compose_up.stderr }}"
 
 - name: Wait for application to be ready
   uri:
