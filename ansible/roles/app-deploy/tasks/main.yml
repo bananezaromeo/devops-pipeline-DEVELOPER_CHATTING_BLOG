@@ -115,3 +115,39 @@
   until: result.status == 200
   retries: 30
   delay: 2
+
+- name: Check frontend container logs
+  shell: docker logs frontend 2>&1 || true
+  register: frontend_logs
+  ignore_errors: yes
+
+- name: Show frontend logs
+  debug:
+    msg: "Frontend logs:\n{{ frontend_logs.stdout }}"
+
+- name: Check port 80 on host
+  shell: netstat -tuln 2>/dev/null | grep ':80 ' || ss -tuln 2>/dev/null | grep ':80 ' || echo "Port 80 not found"
+  register: host_port_80
+  ignore_errors: yes
+
+- name: Show host port 80
+  debug:
+    msg: "Host port 80:\n{{ host_port_80.stdout }}"
+
+- name: Test frontend locally
+  shell: curl -v http://localhost/ 2>&1 || true
+  register: frontend_test
+  ignore_errors: yes
+
+- name: Show frontend test
+  debug:
+    msg: "Frontend local test:\n{{ frontend_test.stdout }}\n{{ frontend_test.stderr }}"
+
+- name: Check Docker network
+  shell: docker network inspect app-network 2>&1 || true
+  register: docker_network
+  ignore_errors: yes
+
+- name: Show Docker network
+  debug:
+    msg: "Docker network:\n{{ docker_network.stdout }}"
