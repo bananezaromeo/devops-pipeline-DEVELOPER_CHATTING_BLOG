@@ -124,11 +124,11 @@ resource "azurerm_network_interface" "main" {
 
 # Linux Virtual Machine
 resource "azurerm_linux_virtual_machine" "main" {
-  name                = "${var.project_name}-${var.environment}-vm"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-  size                = var.vm_size
-  admin_username      = var.admin_username
+  name                            = "${var.project_name}-${var.environment}-vm"
+  location                        = azurerm_resource_group.main.location
+  resource_group_name             = azurerm_resource_group.main.name
+  size                            = var.vm_size
+  admin_username                  = var.admin_username
   disable_password_authentication = false
 
   network_interface_ids = [
