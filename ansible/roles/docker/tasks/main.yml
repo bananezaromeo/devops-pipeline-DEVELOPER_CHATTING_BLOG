@@ -46,16 +46,15 @@
     groups: docker
     append: yes
 
-- name: Install Docker Compose
-  get_url:
-    url: "https://github.com/docker/compose/releases/download/v2.28.1/docker-compose-linux-x86_64"
-    dest: /usr/local/bin/docker-compose
-    mode: '0755'
+- name: Remove standalone docker-compose if present
+  file:
+    path: /usr/local/bin/docker-compose
+    state: absent
 
 - name: Upgrade Docker client to latest
   shell: |
     apt-get update
-    apt-get install --only-upgrade -y docker-ce docker-ce-cli containerd.io
+    apt-get install --only-upgrade -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
   when: ansible_os_family == "Debian"
 
 - name: Restart Docker daemon to load new client version
@@ -63,6 +62,13 @@
     name: docker
     state: restarted
     daemon_reload: yes
+    
+- name: Create symlink for docker-compose compatibility
+  file:
+    src: /usr/libexec/docker/cli-plugins/docker-compose
+    dest: /usr/local/bin/docker-compose
+    state: link
+  ignore_errors: yes
 
 - name: Wait for Docker daemon to be ready
   shell: docker ps
