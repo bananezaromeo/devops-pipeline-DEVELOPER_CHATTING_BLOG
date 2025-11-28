@@ -2,8 +2,6 @@ const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
 
-const User = require('../models/User'); // optional: fetch full user if needed
-
 const authMiddleware = async (req, res, next) => {
   try {
     // Get token from header
