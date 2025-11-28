@@ -34,10 +34,24 @@
     owner: "{{ ansible_user }}"
     mode: '0600'
 
+- name: Show docker-compose file content
+  shell: cat /opt/devops-app/docker-compose.yml
+  register: compose_content
+
+- name: Debug docker-compose
+  debug:
+    msg: "{{ compose_content.stdout }}"
+
 - name: Pull latest images
   community.docker.docker_compose:
     project_src: /opt/devops-app
     pull: yes
+  register: pull_result
+  ignore_errors: yes
+
+- name: Show pull errors
+  debug:
+    msg: "Pull result: {{ pull_result }}"
 
 - name: Start application containers
   community.docker.docker_compose:
