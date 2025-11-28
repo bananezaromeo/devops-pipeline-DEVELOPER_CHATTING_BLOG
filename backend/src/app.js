@@ -13,15 +13,15 @@ app.use(express.json());
 
 // Swagger setup
 const swaggerOptions = {
-    swaggerDefinition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'Developer Chatting API',
-            version: '1.0.0',
-            description: 'API documentation for user authentication and messages',
-        },
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Developer Chatting API',
+      version: '1.0.0',
+      description: 'API documentation for user authentication and messages',
     },
-    apis: ['./src/routes/*.js'],
+  },
+  apis: ['./src/routes/*.js'],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
@@ -34,4 +34,5 @@ app.use('/api/auth', authRoutes);
 app.get('/health', (req, res) => res.send('Server is healthy'));
 
 const PORT = process.env.PORT || 5000;
+// eslint-disable-next-line no-console
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
