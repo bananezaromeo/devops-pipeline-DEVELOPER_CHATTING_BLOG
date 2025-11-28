@@ -1,9 +1,9 @@
-const User = require("../models/User");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const generateOTP = require("../utils/otpGenerator");
-const nodemailer = require("nodemailer");
-require("dotenv").config();
+const User = require('../models/User');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const generateOTP = require('../utils/otpGenerator');
+const nodemailer = require('nodemailer');
+require('dotenv').config();
 
 // Configure Nodemailer transporter for Gmail
 const transporter = nodemailer.createTransport({
