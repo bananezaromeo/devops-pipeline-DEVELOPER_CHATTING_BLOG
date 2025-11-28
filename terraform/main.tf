@@ -141,7 +141,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   }
 
   lifecycle {
-    ignore_changes = [os_disk]
+    ignore_changes = [os_disk, admin_ssh_key]
   }
 
   os_disk {
