@@ -127,6 +127,14 @@ jobs:
           cat > ansible/inventory/hosts << EOF
           [app_servers]
           azure-vm ansible_host=${{ secrets.VM_PUBLIC_IP }} ansible_user=azureuser
+          
+          [app_servers:vars]
+          acr_name=${{ secrets.ACR_NAME }}
+          acr_login_server=${{ secrets.ACR_LOGIN_SERVER }}
+          image_tag=${{ needs.build-and-push.outputs.image_tag }}
+          db_user=${{ secrets.DB_USER }}
+          db_password=${{ secrets.DB_PASSWORD }}
+          db_name=${{ secrets.DB_NAME }}
           EOF
 
       - name: Run Ansible deployment
@@ -137,14 +145,7 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         run: |
-          ansible-playbook playbooks/setup-server.yml -i inventory/hosts \
-            -e acr_name='${{ secrets.ACR_NAME }}' \
-            -e acr_login_server='${{ secrets.ACR_LOGIN_SERVER }}' \
-            -e image_tag='${{ needs.build-and-push.outputs.image_tag }}' \
-            -e db_user='${{ secrets.DB_USER }}' \
-            -e db_password='${{ secrets.DB_PASSWORD }}' \
-            -e db_name='${{ secrets.DB_NAME }}' \
-            -v
+          ansible-playbook playbooks/setup-server.yml -i inventory/hosts -v
 
       - name: Verify deployment
         run: |
