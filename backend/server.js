@@ -23,6 +23,12 @@ const server = http.createServer(app); // For Socket.IO
 app.use(cors());
 app.use(express.json());
 
+// Request logging middleware
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+    next();
+});
+
 // Swagger setup (must be before routes)
 setupSwagger(app);
 
