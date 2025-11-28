@@ -73,6 +73,22 @@
   debug:
     msg: "Docker compose output:\n{{ compose_up.stdout }}\n{{ compose_up.stderr }}"
 
+- name: Check running containers
+  shell: docker ps -a
+  register: docker_containers
+
+- name: Show all containers
+  debug:
+    msg: "All containers:\n{{ docker_containers.stdout }}"
+
+- name: Check container logs
+  shell: docker logs backend 2>&1 || true
+  register: backend_logs
+
+- name: Show backend logs
+  debug:
+    msg: "Backend logs:\n{{ backend_logs.stdout }}"
+
 - name: Wait for application to be ready
   uri:
     url: "http://localhost:5000/health"

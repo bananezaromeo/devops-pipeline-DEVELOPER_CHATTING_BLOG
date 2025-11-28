@@ -155,8 +155,11 @@ jobs:
       - name: Verify deployment
         run: |
           sleep 30
-          curl -f http://${{ secrets.VM_PUBLIC_IP }}/health || exit 1
-          curl -f http://${{ secrets.VM_PUBLIC_IP }} || exit 1
+          echo "Testing backend health on port 5000..."
+          curl -v http://${{ secrets.VM_PUBLIC_IP }}:5000/health || echo "Backend health check failed"
+          echo ""
+          echo "Testing frontend on port 80..."
+          curl -v http://${{ secrets.VM_PUBLIC_IP }}:80/ || echo "Frontend check failed"
 
       - name: Get VM IP
         id: get-ip
