@@ -32,6 +32,7 @@ let swaggerSpec;
 try {
   swaggerSpec = swaggerJsdoc(options);
 } catch (error) {
+  // eslint-disable-next-line no-console
   console.error('Swagger JSDoc Error:', error.message);
   // Fallback to basic spec if parsing fails
   swaggerSpec = options.definition;

@@ -18,6 +18,7 @@ app.use(express.json());
 try {
   setupSwagger(app);
 } catch (error) {
+  // eslint-disable-next-line no-console
   console.error('Error setting up Swagger:', error.message);
 }
 
@@ -35,7 +36,9 @@ app.get('/', (req, res) => {
 });
 
 // Error handling middleware
-app.use((err, req, res, next) => {
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, _next) => {
+  // eslint-disable-next-line no-console
   console.error('Error:', err);
   res.status(500).json({ error: 'Internal server error', message: err.message });
 });
@@ -46,8 +49,12 @@ app.use((req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
+// eslint-disable-next-line no-console
 app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
   console.log(`Server running on port ${PORT}`);
+  // eslint-disable-next-line no-console
   console.log(`Health check: http://localhost:${PORT}/health`);
+  // eslint-disable-next-line no-console
   console.log(`API Docs: http://localhost:${PORT}/api-docs`);
 });
