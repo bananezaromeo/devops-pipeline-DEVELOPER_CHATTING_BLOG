@@ -5,13 +5,14 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'My API Documentation',
+      title: 'DevOps Chatting Blog API',
       version: '1.0.0',
-      description: 'API documentation using Swagger for my Node.js project',
+      description: 'API documentation for DevOps Chatting Blog',
     },
     servers: [
       {
         url: 'http://localhost:5000',
+        description: 'Development server',
       },
     ],
     components: {
@@ -24,10 +25,17 @@ const options = {
       },
     },
   },
-  apis: ['./src/routes/*.js'], // Swagger docs read from route files
+  apis: [], // Empty array to avoid swagger-jsdoc parsing errors
 };
 
-const swaggerSpec = swaggerJsdoc(options);
+let swaggerSpec;
+try {
+  swaggerSpec = swaggerJsdoc(options);
+} catch (error) {
+  console.error('Swagger JSDoc Error:', error.message);
+  // Fallback to basic spec if parsing fails
+  swaggerSpec = options.definition;
+}
 
 function setupSwagger(app) {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
